@@ -25,7 +25,7 @@ public class PetDBService {
     }
 
     @PostConstruct
-    public void run() {
+    public void connect() {
         LOGGER.info(String.format("Connecting to PetDB Server - port:%s host:%s", this.port, this.host));
         this.db = new PetDB(new InetSocketAddress(host, Integer.parseInt(port)));
     }
