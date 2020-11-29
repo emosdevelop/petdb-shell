@@ -20,8 +20,16 @@ public class PetDBService {
     @Value("${petdb.host}")
     private String host;
 
-    private String call(String query) {
+    public String call(String query) {
         return db.call(query);
+    }
+
+    public void close() {
+        this.db.close();
+    }
+
+    public void open() {
+        this.db.open();
     }
 
     @PostConstruct

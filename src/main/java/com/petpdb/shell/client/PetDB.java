@@ -34,7 +34,6 @@ public final class PetDB {
     public void close() {
         this.isRunning = false;
         this.connection.close();
-        this.pool.shutdown();
     }
 
     public String call(String query) {
