@@ -9,5 +9,4 @@ public class ShellApplication {
     public static void main(String[] args) {
         SpringApplication.run(ShellApplication.class, args);
     }
-
 }
