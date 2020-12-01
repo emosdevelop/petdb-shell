@@ -1,5 +1,6 @@
 package com.petpdb.shell.console;
 
+import com.petpdb.shell.client.PetDB;
 import org.jline.utils.AttributedString;
 import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ public class Prompt implements PromptProvider {
 
     @Override
     public AttributedString getPrompt() {
-        return new AttributedString(console.getHost() + ">");
+        String isRunning = PetDB.isRunning.get() ? "Connected" : "Disconnected";
+        return new AttributedString(isRunning + " " + console.getHost() + ">");
     }
 }

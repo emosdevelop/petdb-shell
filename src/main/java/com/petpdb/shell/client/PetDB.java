@@ -4,35 +4,33 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public final class PetDB {
 
+    public final static AtomicBoolean isRunning = new AtomicBoolean();
+
     private final ExecutorService pool = Executors.newFixedThreadPool(1);
     private final InetSocketAddress address;
-    private Connection connection;
-    private boolean isRunning;
+    private final Connection connection;
 
-    public PetDB(InetSocketAddress address) {
+    public PetDB(InetSocketAddress address) throws IOException {
         this.address = address;
-        try {
-            this.connection = new Connection(address);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.connection = new Connection(address);
     }
 
     public void open() {
-        if (this.isRunning) {
+        if (PetDB.isRunning.get()) {
             throw new PetDBClientConnectionException(
                     "Connection to PetDB server is already open");
         }
-        this.isRunning = true;
+        PetDB.isRunning.set(true);
         this.pool.submit(this.connection);
     }
 
     public void close() {
-        this.isRunning = false;
+        PetDB.isRunning.set(false);
         this.connection.close();
     }
 
@@ -41,12 +39,16 @@ public final class PetDB {
             return "";
         } else if (this.pool.isShutdown() ||
                 this.pool.isTerminated() ||
-                !this.isRunning) {
-            this.isRunning = false;
+                !PetDB.isRunning.get()) {
+            PetDB.isRunning.set(false);
             throw new PetDBClientConnectionException(
                     "Connection to PetDB server is not open");
         }
         this.connection.newRequest(query.trim());
         return this.connection.getResponse();
+    }
+
+    public InetSocketAddress getAddress() {
+        return this.address;
     }
 }

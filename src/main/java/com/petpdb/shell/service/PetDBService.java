@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 
 @Service
@@ -33,7 +34,7 @@ public class PetDBService {
     }
 
     @PostConstruct
-    public void connect() {
+    public void connect() throws IOException {
         LOGGER.info(String.format("Connecting to PetDB Server - port:%s host:%s", this.port, this.host));
         this.db = new PetDB(new InetSocketAddress(host, Integer.parseInt(port)));
     }
