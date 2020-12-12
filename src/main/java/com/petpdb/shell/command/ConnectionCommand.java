@@ -16,13 +16,13 @@ public class ConnectionCommand {
         this.console = console;
     }
 
-    @ShellMethod("Open the connection to PetDB")
+    @ShellMethod(value = "Open the connection to PetDB", key = {"OPEN", "open"})
     public void open() {
         service.open();
         this.console.write("Open!");
     }
 
-    @ShellMethod("Close the connection to PetDB")
+    @ShellMethod(value = "Close the connection to PetDB", key = {"CLOSE", "close"})
     public void close() {
         service.close();
         this.console.write("Closed!");
