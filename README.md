@@ -26,5 +26,5 @@ Ends the active transaction
 # Flush
 Flushes the database
 
-# Dump
+# Dump < XML > | < JSON >
 Dump the database entries into a JSON or XML file.
