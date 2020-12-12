@@ -16,7 +16,6 @@ public class Prompt implements PromptProvider {
 
     @Override
     public AttributedString getPrompt() {
-        String isRunning = PetDB.isRunning.get() ? "Connected" : "Disconnected";
-        return new AttributedString(isRunning + " " + console.getHost() + ">");
+        return new AttributedString(console.getHost() + ">");
     }
 }
