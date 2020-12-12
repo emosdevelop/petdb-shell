@@ -18,6 +18,7 @@ public class GetCommand {
 
     @ShellMethod(value = "Get value from given key", key = {"GET", "get"})
     public void get(String key) {
-        console.write(service.call("GET " + key));
+        String query = String.format("GET %s", key);
+        console.write(service.call(query));
     }
 }
